@@ -9,21 +9,22 @@ const port = process.env.PORT || 5000;
 // Define allowed origins
 const allowedOrigins = [
   "http://localhost:5173", // Local development
-  "https://book-store-mern-app-full-stack-oussama-graphics-gk2y.vercel.app", // Deployed frontend
+  "https://book-app-frontend-six-dun.vercel.app/", // Deployed frontend
 ];
 
-// Enable CORS with allowed origins
+// Enable CORS with allowed origins and credentials support
 app.use(
   cors({
     origin: function (origin, callback) {
+      // Check if the origin is in the allowed list or is undefined (for localhost)
       if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
       }
     },
-    methods: "GET, POST, PUT, DELETE",
-    credentials: true, // If using cookies or authentication
+    methods: "GET, POST, PUT, DELETE", // Allowed methods
+    credentials: true, // Allow credentials (cookies, authorization headers, etc.)
   })
 );
 
