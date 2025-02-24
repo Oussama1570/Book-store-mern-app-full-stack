@@ -5,7 +5,7 @@ const ordersApi = createApi({
     reducerPath: 'ordersApi',
     baseQuery: fetchBaseQuery({
         baseUrl: `${getBaseUrl().replace(/\/$/, '')}/api/orders`, // Ensures no double slash
-        credentials: 'include'  // Ensure credentials are sent with the request
+        credentials: 'include'
     }),
     tagTypes: ['Orders'],
     endpoints: (builder) => ({
@@ -14,7 +14,7 @@ const ordersApi = createApi({
                 url: "/",
                 method: "POST",
                 body: newOrder,
-                credentials: 'include'  // Ensure credentials are sent
+                credentials: 'include',
             }),
             invalidatesTags: ['Orders'] // Ensure cache is updated
         }),
