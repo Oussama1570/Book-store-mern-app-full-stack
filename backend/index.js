@@ -9,7 +9,7 @@ const port = process.env.PORT || 5000;
 // Define allowed origins
 const allowedOrigins = [
   "http://localhost:5173", // Local development
-  "https://book-store-mern-app-full-stack-oussama-graphics-gk2y.vercel.app", // Deployed frontend
+  "https://product-app-frontend-chi.vercel.app", // Deployed frontend
 ];
 
 // Enable CORS with allowed origins
@@ -31,12 +31,12 @@ app.use(
 app.use(express.json());
 
 // Routes
-const bookRoutes = require("./src/books/book.route");
+const productRoutes = require("./src/products/product.route");
 const orderRoutes = require("./src/orders/order.route");
 const userRoutes = require("./src/users/user.route");
 const adminRoutes = require("./src/stats/admin.stats");
 
-app.use("/api/books", bookRoutes);
+app.use("/api/products", productRoutes);  // Updated to use 'products' instead of 'products'
 app.use("/api/orders", orderRoutes);
 app.use("/api/auth", userRoutes);
 app.use("/api/admin", adminRoutes);
@@ -58,10 +58,11 @@ main();
 
 // Default route
 app.get("/", (req, res) => {
-  res.send("Book Store Server is running!");
+  res.send("Product Store Server is running!");  // Updated the message to reflect products
 });
 
 // Start server
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });
+

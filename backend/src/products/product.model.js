@@ -1,15 +1,15 @@
-const mongoose =  require('mongoose');
+const mongoose = require('mongoose');
 
-const bookSchema = new mongoose.Schema({
+const productSchema = new mongoose.Schema({
     title: {
         type: String,
         required: true,
     },
-    description:  {
+    description: {
         type: String,
         required: true,
     },
-    category:  {
+    category: {
         type: String,
         required: true,
     },
@@ -33,10 +33,10 @@ const bookSchema = new mongoose.Schema({
         type: Date,
         default: Date.now,
     }
-  }, {
+}, {
     timestamps: true,
-  });
+});
 
-  const Book = mongoose.model('Book', bookSchema);
+const Product = mongoose.model('Product', productSchema);  // Updated to use 'Product' instead of 'Product'
 
-  module.exports = Book;
+module.exports = Product;

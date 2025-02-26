@@ -1,9 +1,8 @@
 const mongoose = require('mongoose');
 const express = require('express');
 const Order = require('../orders/order.model');
-const Book = require('../books/book.model');
+const Product = require('../products/product.model');  // Updated to use 'Product' instead of 'Product'
 const router = express.Router();
-
 
 // Function to calculate admin stats
 router.get("/", async (req, res) => {
@@ -21,17 +20,17 @@ router.get("/", async (req, res) => {
             }
         ]);
 
-        // 4. Trending books statistics: 
-        const trendingBooksCount = await Book.aggregate([
-            { $match: { trending: true } },  // Match only trending books
-            { $count: "trendingBooksCount" }  // Return the count of trending books
+        // 4. Trending products statistics: 
+        const trendingProductsCount = await Product.aggregate([  // Updated to 'Product'
+            { $match: { trending: true } },  // Match only trending products
+            { $count: "trendingProductsCount" }  // Return the count of trending products
         ]);
         
         // If you want just the count as a number, you can extract it like this:
-        const trendingBooks = trendingBooksCount.length > 0 ? trendingBooksCount[0].trendingBooksCount : 0;
+        const trendingProducts = trendingProductsCount.length > 0 ? trendingProductsCount[0].trendingProductsCount : 0;
 
-        // 5. Total number of books
-        const totalBooks = await Book.countDocuments();
+        // 5. Total number of products
+        const totalProducts = await Product.countDocuments();  // Updated to 'Product'
 
         // 6. Monthly sales (group by month and sum total sales for each month)
         const monthlySales = await Order.aggregate([
@@ -46,16 +45,18 @@ router.get("/", async (req, res) => {
         ]);
 
         // Result summary
-        res.status(200).json({  totalOrders,
+        res.status(200).json({  
+            totalOrders,
             totalSales: totalSales[0]?.totalSales || 0,
-            trendingBooks,
-            totalBooks,
-            monthlySales, });
+            trendingProducts,  // Updated to 'trendingProducts'
+            totalProducts,  // Updated to 'totalProducts'
+            monthlySales, 
+        });
       
     } catch (error) {
         console.error("Error fetching admin stats:", error);
         res.status(500).json({ message: "Failed to fetch admin stats" });
     }
-})
+});
 
 module.exports = router;

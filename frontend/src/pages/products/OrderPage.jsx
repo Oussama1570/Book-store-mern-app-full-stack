@@ -3,12 +3,12 @@ import { useGetOrderByEmailQuery } from '../../redux/features/orders/ordersApi'
 import { useAuth } from '../../context/AuthContext';
 
 const OrderPage = () => {
-    const { currentUser} = useAuth()
-
+    const { currentUser } = useAuth()
 
     const { data: orders = [], isLoading, isError } = useGetOrderByEmailQuery(currentUser.email);
     if (isLoading) return <div>Loading...</div>
-    if (isError) return <div>Error geting orders data</div>
+    if (isError) return <div>Error getting orders data</div>
+    
     return (
         <div className='container mx-auto p-6'>
             <h2 className='text-2xl font-semibold mb-4'>Your Orders</h2>
@@ -25,7 +25,7 @@ const OrderPage = () => {
                                 <p className="text-gray-600">Total Price: ${order.totalPrice}</p>
                                 <h3 className="font-semibold mt-2">Address:</h3>
                                 <p> {order.address.city}, {order.address.state}, {order.address.country}, {order.address.zipcode}</p>
-                                <h3 className="font-semibold mt-2">Products Id:</h3>
+                                <h3 className="font-semibold mt-2">Products:</h3>
                                 <ul>
                                     {order.productIds.map((productId) => (
                                         <li key={productId}>{productId}</li>

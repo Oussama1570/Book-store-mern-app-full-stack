@@ -1,82 +1,84 @@
 import React, { useEffect } from 'react'
-import InputField from '../addBook/InputField'
-import SelectField from '../addBook/SelectField'
+import InputField from '../addProduct/InputField'
+import SelectField from '../addProduct/SelectField'
 import { useForm } from 'react-hook-form';
 import { useParams } from 'react-router-dom';
-import { useFetchBookByIdQuery, useUpdateBookMutation } from '../../../redux/features/books/booksApi';
+import { useFetchProductByIdQuery, useUpdateProductMutation } from '../../../redux/features/products/productsApi';
 import Loading from '../../../components/Loading';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import getBaseUrl from '../../../utils/baseURL';
 
-const UpdateBook = () => {
+const UpdateProduct = () => {
   const { id } = useParams();
-  const { data: bookData, isLoading, isError, refetch } = useFetchBookByIdQuery(id);
-  // console.log(bookData)
-  const [updateBook] = useUpdateBookMutation();
+  const { data: productData, isLoading, isError, refetch } = useFetchProductByIdQuery(id);
+  const [updateProduct] = useUpdateProductMutation();
   const { register, handleSubmit, setValue, reset } = useForm();
+  
   useEffect(() => {
-    if (bookData) {
-      setValue('title', bookData.title);
-      setValue('description', bookData.description);
-      setValue('category', bookData?.category);
-      setValue('trending', bookData.trending);
-      setValue('oldPrice', bookData.oldPrice);
-      setValue('newPrice', bookData.newPrice);
-      setValue('coverImage', bookData.coverImage)
+    if (productData) {
+      setValue('title', productData.title);
+      setValue('description', productData.description);
+      setValue('category', productData?.category);
+      setValue('trending', productData.trending);
+      setValue('oldPrice', productData.oldPrice);
+      setValue('newPrice', productData.newPrice);
+      setValue('coverImage', productData.coverImage)
     }
-  }, [bookData, setValue])
+  }, [productData, setValue]);
 
   const onSubmit = async (data) => {
-    const updateBookData = {
+    const updateProductData = {
       title: data.title,
       description: data.description,
       category: data.category,
       trending: data.trending,
       oldPrice: Number(data.oldPrice),
       newPrice: Number(data.newPrice),
-      coverImage: data.coverImage || bookData.coverImage,
+      coverImage: data.coverImage || productData.coverImage,
     };
     try {
-      await axios.put(`${getBaseUrl()}/api/books/edit/${id}`, updateBookData, {
+      await axios.put(`${getBaseUrl()}/api/products/edit/${id}`, updateProductData, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${localStorage.getItem('token')}`
         }
-      })
+      });
       Swal.fire({
-        title: "Book Updated",
-        text: "Your book is updated successfully!",
+        title: "Product Updated",
+        text: "Your product is updated successfully!",
         icon: "success",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes, It's Okay!"
       });
-      await refetch()
+      await refetch();
     } catch (error) {
-      console.log("Failed to update book.");
-      alert("Failed to update book.");
+      console.log("Failed to update product.");
+      alert("Failed to update product.");
     }
   }
+
   if (isLoading) return <Loading />
-  if (isError) return <div>Error fetching book data</div>
+  if (isError) return <div>Error fetching product data</div>
+
   return (
     <div className="max-w-lg mx-auto md:p-6 p-3 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Update Book</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">Update Product</h2>
 
       <form onSubmit={handleSubmit(onSubmit)}>
         <InputField
           label="Title"
           name="title"
-          placeholder="Enter book title"
+          placeholder="Enter product title"
           register={register}
         />
 
         <InputField
           label="Description"
           name="description"
-          placeholder="Enter book description"
+          placeholder="Enter product description"
           type="textarea"
           register={register}
         />
@@ -130,11 +132,11 @@ const UpdateBook = () => {
         />
 
         <button type="submit" className="w-full py-2 bg-blue-500 text-white font-bold rounded-md">
-          Update Book
+          Update Product
         </button>
       </form>
     </div>
   )
 }
 
-export default UpdateBook
+export default UpdateProduct;

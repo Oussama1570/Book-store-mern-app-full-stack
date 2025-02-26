@@ -9,8 +9,8 @@ import RevenueChart from './RevenueChart';
 const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [data, setData] = useState({});
-    // console.log(data)
     const navigate = useNavigate()
+
     useEffect(() => {
         const fetchData = async () => {
             try {
@@ -31,8 +31,6 @@ const Dashboard = () => {
         fetchData();
     }, []);
 
-    // console.log(data)
-
     if(loading) return <Loading/>
 
   return (
@@ -45,7 +43,7 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <span className="block text-2xl font-bold">{data?.totalBooks}</span>
+                  <span className="block text-2xl font-bold">{data?.totalProducts}</span>
                   <span className="block text-gray-500">Products</span>
                 </div>
               </div>
@@ -67,9 +65,9 @@ const Dashboard = () => {
                   </svg>
                 </div>
                 <div>
-                  <span className="inline-block text-2xl font-bold">{data?.trendingBooks}</span>
+                  <span className="inline-block text-2xl font-bold">{data?.trendingProducts}</span>
                   <span className="inline-block text-xl text-gray-500 font-semibold">(13%)</span>
-                  <span className="block text-gray-500">Trending Books in This Month</span>
+                  <span className="block text-gray-500">Trending Products in This Month</span>
                 </div>
               </div>
               <div className="flex items-center p-8 bg-white shadow rounded-lg">
@@ -165,40 +163,17 @@ const Dashboard = () => {
                     </li>
                     <li className="flex items-center">
                       <div className="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
-                        <img src="https://randomuser.me/api/portraits/women/77.jpg" alt="Jane Lane profile picture"/>
+                        <img src="https://randomuser.me/api/portraits/men/77.jpg" alt="Arnold Gibson profile picture"/>
                       </div>
-                      <span className="text-gray-600">Jane Lane</span>
-                      <span className="ml-auto font-semibold">8.1</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
-                        <img src="https://randomuser.me/api/portraits/men/76.jpg" alt="Pat Mckinney profile picture"/>
-                      </div>
-                      <span className="text-gray-600">Pat Mckinney</span>
+                      <span className="text-gray-600">Arnold Gibson</span>
                       <span className="ml-auto font-semibold">7.9</span>
-                    </li>
-                    <li className="flex items-center">
-                      <div className="h-10 w-10 mr-3 bg-gray-100 rounded-full overflow-hidden">
-                        <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Norman Walters profile picture"/>
-                      </div>
-                      <span className="text-gray-600">Norman Walters</span>
-                      <span className="ml-auto font-semibold">7.7</span>
                     </li>
                   </ul>
                 </div>
               </div>
-              <div className="flex flex-col row-span-3 bg-white shadow rounded-lg">
-                <div className="px-6 py-5 font-semibold border-b border-gray-100">Students by type of studying</div>
-                <div className="p-4 flex-grow">
-                  <div className="flex items-center justify-center h-full px-4 py-24 text-gray-400 text-3xl font-semibold bg-gray-100 border-2 border-gray-200 border-dashed rounded-md">Chart</div>
-                </div>
-              </div>
-            </section>
-            <section className="text-right font-semibold text-gray-500">
-              <a href="#" className="text-purple-600 hover:underline">Recreated on Codepen</a> with <a href="https://tailwindcss.com/" className="text-teal-400 hover:underline">Tailwind CSS</a> by Azri Kahar, <a href="https://dribbble.com/shots/10711741-Free-UI-Kit-for-Figma-Online-Courses-Dashboard" className="text-purple-600 hover:underline">original design</a> made by Chili Labs
             </section>
     </>
   )
 }
 
-export default Dashboard
+export default Dashboard;
